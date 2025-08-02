@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mafesya Wisnuryan Syah - Pegiat Teknologi</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset and Basic Setup */
+        :root {
+            --primary-color: #00aaff; /* Biru teknologi yang cerah */
+            --primary-hover-color: #0088cc; /* Warna hover untuk tombol */
+            --background-color: #0a192f; /* Biru navy gelap */
+            --card-color: #172a45; /* Biru sedikit lebih terang */
+            --text-color: #ccd6f6;
+            --light-text-color: #8892b0;
+            --white-color: #e6f1ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 100px 25px;
+        }
+
+        /* Animate on scroll */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--white-color);
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: clamp(26px, 5vw, 32px);
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .nav-logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            color: var(--white-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Mobile Nav */
+        .nav-toggle {
+            display: none;
+            cursor: pointer;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--white-color);
+            margin: 5px 0;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Header / Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 10%;
+            text-align: left;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 70px);
+            margin-bottom: 10px;
+        }
+
+        .hero .tagline {
+            font-size: clamp(18px, 4vw, 24px);
+            font-weight: 400;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 600px;
+            color: var(--light-text-color);
+        }
+
+        /* About Section */
+        #about .about-content {
+            font-size: 1.05rem;
+            color: var(--light-text-color);
+        }
+        
+        #about p strong {
+            color: var(--primary-color);
+        }
+
+        /* Photo Gallery Section */
+        #gallery .gallery-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .photo-frame {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid var(--card-color);
+            box-shadow: 0 0 25px rgba(0, 170, 255, 0.2);
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Portfolio & Experience Section Cards */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: var(--card-color);
+            padding: 30px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #1d3557;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+        }
+        .card h3 {
+            color: var(--white-color);
+            margin-bottom: 15px;
+        }
+        .card p {
+            color: var(--light-text-color);
+            font-size: 0.95rem;
+            flex-grow: 1; /* Makes paragraph grow and push footer down */
+        }
+        .card-tags {
+            margin-top: 20px;
+        }
+        .card-tags .tag {
+            display: inline-block;
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        /* Download Button Style */
+        .download-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 700;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .download-button:hover {
+            background-color: var(--primary-hover-color);
+        }
+
+
+        /* Education Section */
+        .timeline {
+            list-style: none;
+            position: relative;
+            padding: 20px 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            height: 100%;
+            width: 3px;
+            background: var(--card-color);
+        }
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 50px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 13px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: 3px solid var(--background-color);
+            z-index: 1;
+        }
+        .timeline-item h4 {
+            color: var(--white-color);
+            margin-bottom: 5px;
+        }
+        .timeline-item p {
+            color: var(--light-text-color);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--card-color);
+        }
+        .social-links a {
+            color: var(--light-text-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+        .copyright {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                background-color: var(--card-color);
+                width: 100%;
+                text-align: center;
+                padding: 20px 0;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .hero {
+                padding: 0 5%;
+                align-items: center;
+                text-align: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="nav-logo">MWS.</a>
+        <ul class="nav-links">
+            <li><a href="#about">Kisah Saya</a></li>
+            <li><a href="#portfolio">Portofolio</a></li>
+            <li><a href="#experience">Pengalaman</a></li>
+            <li><a href="#gallery">Galeri</a></li>
+            <li><a href="#education">Pendidikan</a></li>
+        </ul>
+        <div class="nav-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1 class="nama-pemilik">Mafesya Wisnuryan Syah</h1>
+        <p class="tagline">Dari Kandang Ternak ke Jantung Teknologi</p>
+        <p>Sebuah perjalanan tak terduga yang membuktikan bahwa hasrat dan ketekunan mampu melampaui batas-batas formal.</p>
+    </header>
+
+    <main>
+        <section id="about" class="container fade-in-section">
+            <h2>Kisah Saya</h2>
+            <div class="about-content">
+                <p>Lahir di Cilacap dan dibesarkan di Pati, perjalanan saya bukanlah garis lurus menuju dunia teknologi. Sejak kecil, takdir seolah sudah berbisik lewat kecintaan orang tua pada dunia IT—mereka adalah pionir di lingkungan kami, memperkenalkan saya pada teknologi jauh sebelum menjadi hal yang umum. Di bangku SMA, tangan saya sudah terbiasa merakit komputer pesanan, menyusun setiap komponen dengan rasa ingin tahu yang besar.</p>
+                <p>Namun, jalan hidup membawa saya ke <strong>Fakultas Peternakan di Universitas Gadjah Mada</strong>. Sebuah bidang yang luar biasa, namun panggilan jiwa di dunia teknologi tak pernah padam. Sembari menimba ilmu di kampus, saya menemukan cara lain untuk mengasah hasrat: memperbaiki <em>handphone</em>. Dari sekadar hobi, aktivitas ini menjadi sumber penghasilan dan laboratorium pribadi saya untuk memahami seluk-beluk perangkat keras.</p>
+                <p>Keahlian yang terasah secara otodidak inilah yang akhirnya membuka gerbang karir profesional saya. Kisah saya adalah bukti bahwa latar belakang pendidikan bukanlah satu-satunya jalan. Dengan rasa ingin tahu, ketekunan, dan keberanian untuk 'mengoprek', setiap orang bisa merintis jalannya sendiri di dunia teknologi yang tanpa batas.</p>
+            </div>
+        </section>
+
+        <section id="portfolio" class="container fade-in-section">
+            <h2>Portofolio Aplikasi</h2>
+            <div class="grid-layout">
+                <div class="card">
+                    <h3>XFT Flasher Tool</h3>
+                    <p>Aplikasi desktop yang dikembangkan bersama Xiaomi Flashing Team untuk mempermudah proses flashing ROM. Dibangun untuk mengatasi masalah unit distributor dengan antarmuka yang intuitif.</p>
+                    <div class="card-tags">
+                        <span class="tag">C#</span>
+                        <span class="tag">.NET</span>
+                        <span class="tag">Desktop App</span>
+                    </div>
+                    <a href="#" class="download-button" target="_blank" rel="noopener noreferrer">Unduh Aplikasi</a>
+                </div>
+                <div class="card">
+                    <h3>Device Inspector</h3>
+                    <p>Aplikasi Android sederhana untuk menampilkan informasi hardware dan software secara detail, membantu teknisi dalam melakukan diagnosis awal kerusakan perangkat.</p>
+                     <div class="card-tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">Android</span>
+                        <span class="tag">Utility</span>
+                    </div>
+                    <a href="#" class="download-button" target="_blank" rel="noopener noreferrer">Unduh Aplikasi</a>
+                </div>
+                <div class="card">
+                    <h3>ROM Hub</h3>
+                    <p>Konsep website untuk komunitas yang berfungsi sebagai pusat informasi dan unduhan custom ROM, dilengkapi dengan panduan dan ulasan dari para pengguna.</p>
+                     <div class="card-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                    <a href="#" class="download-button" target="_blank" rel="noopener noreferrer">Lihat Situs</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="container fade-in-section">
+            <h2>Pengalaman Profesional</h2>
+            <div class="grid-layout">
+                <div class="card">
+                    <h3>Teknisi Profesional</h3>
+                    <p>Saat ini bekerja sebagai teknisi di <strong>Xiaomi Exclusive Service Center</strong>, menangani berbagai macam perbaikan hardware dan software dengan standar resmi.</p>
+                </div>
+                <div class="card">
+                    <h3>Xiaomi Flashing Team</h3>
+                    <p>Bergabung sejak <strong>2014</strong> dengan tim solid para pegiat flashing. Berbagi ilmu, memecahkan kasus software kompleks, dan terus update dengan perkembangan terbaru.</p>
+                </div>
+                <div class="card">
+                    <h3>Proyek Aplikasi Flashing</h3>
+                    <p>Dipercaya oleh distributor HP dari China untuk turut serta dalam proyek pengembangan aplikasi <strong>flashing tool</strong> khusus untuk unit Xiaomi distributor di Indonesia.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="container fade-in-section">
+            <h2>Galeri</h2>
+            <div class="gallery-content">
+                <div class="photo-frame">
+                    <img src="https://placehold.co/400x400/0a192f/e6f1ff?text=Foto+Anda" alt="Foto Mafesya Wisnuryan Syah">
+                </div>
+            </div>
+        </section>
+        
+        <section id="education" class="container fade-in-section">
+            <h2>Riwayat Pendidikan</h2>
+            <ul class="timeline">
+                <li class="timeline-item">
+                    <h4>Universitas Gadjah Mada</h4>
+                    <p>Fakultas Peternakan</p>
+                </li>
+                <li class="timeline-item">
+                    <h4>SMA Negeri 03 Pati</h4>
+                </li>
+                <li class="timeline-item">
+                    <h4>SMP Negeri 02 Pati</h4>
+                </li>
+                <li class="timeline-item">
+                    <h4>SD Negeri 03 Pati</h4>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="social-links">
+            <a href="#" target="_blank">LinkedIn</a>
+            <a href="#" target="_blank">Instagram</a>
+            <a href="#" target="_blank">GitHub</a>
+        </div>
+        <p class="copyright">&copy; 2025 Mafesya Wisnuryan Syah. Dibuat dengan hasrat untuk teknologi.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate on scroll
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => observer.observe(section));
+
+            // Navbar scroll effect
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // Mobile nav toggle
+            const navToggle = document.querySelector('.nav-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            navToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
